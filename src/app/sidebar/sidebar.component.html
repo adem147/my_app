@@ -1,0 +1,22 @@
+<aside class="sidebar">
+  <h2>Spaces</h2>
+  <ul class="space-list">
+    <li
+      *ngFor="let space of spaces"
+      (click)="onSpaceClick(space)"
+      [class.active]="space === selectedSpace"
+    >
+      <div class="space-name">{{ space.name }}</div>
+
+      <ul class="list-list">
+        <li
+          *ngFor="let list of space.lists"
+          (click)="onListClick(list, $event)"
+          [class.active]="list === selectedList"
+        >
+          {{ list.name }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</aside>
