@@ -1,31 +1,9 @@
 <div class="workspace">
   <app-sidebar
-    [spaces]="spaces"
-    [selectedSpace]="selectedSpace"
+    [boards]="boards"
+    [selectedBoard]="selectedBoard"
     [selectedList]="selectedList"
-    (spaceSelected)="onSpaceSelected($event)"
+    (boardSelected)="onBoardSelected($event)"
     (listSelected)="onListSelected($event)"
   ></app-sidebar>
-
-  <main class="workspace-main">
-    <header class="workspace-topbar">
-      <div class="workspace-logo">Simple ClickUp</div>
-      <div class="workspace-user">
-        <div class="workspace-user-avatar">A</div>
-      </div>
-    </header>
-
-    <section class="workspace-content-card">
-      <header class="workspace-header">
-        <h1>{{ selectedSpace.name }} / {{ selectedList.name }}</h1>
-      </header>
-
-      <app-task-list
-        [tasks]="selectedList.tasks"
-        (taskToggled)="onTaskToggled($event)"
-        (taskAdded)="onTaskAdded($event)"
-        (taskDeleted)="onTaskDeleted($event)"
-      ></app-task-list>
-    </section>
-  </main>
 </div>

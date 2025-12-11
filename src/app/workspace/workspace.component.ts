@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { TaskListComponent } from '../task-list/task-list.component';
 
 interface Task {
   id: number;
@@ -15,25 +14,25 @@ interface TaskList {
   tasks: Task[];
 }
 
-interface Space {
+interface Board {
   id: number;
   name: string;
-  lists: TaskList[];
+  taskLists: TaskList[];
 }
 
 @Component({
   selector: 'app-workspace',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, TaskListComponent],
+  imports: [CommonModule, SidebarComponent],
   templateUrl: './workspace.component.html',
   styleUrl: './workspace.component.css'
 })
 export class WorkspaceComponent {
-  spaces: Space[] = [
+  boards: Board[] = [
     {
       id: 1,
-      name: 'Personal',
-      lists: [
+      name: 'Project 1',
+      taskLists: [
         {
           id: 1,
           name: 'To Do',
@@ -52,7 +51,7 @@ export class WorkspaceComponent {
     {
       id: 2,
       name: 'Work',
-      lists: [
+      taskLists: [
         {
           id: 3,
           name: 'Tasks',
@@ -64,12 +63,12 @@ export class WorkspaceComponent {
     }
   ];
 
-  selectedSpace: Space = this.spaces[0];
-  selectedList: TaskList = this.spaces[0].lists[0];
+  selectedBoard: Board = this.boards[0];
+  selectedList: TaskList = this.boards[0].taskLists[0];
 
-  onSpaceSelected(space: Space): void {
-    this.selectedSpace = space;
-    this.selectedList = space.lists[0];
+  onBoardSelected(space: Board): void {
+    this.selectedBoard = space;
+    this.selectedList = space.taskLists[0];
   }
 
   onListSelected(list: TaskList): void {

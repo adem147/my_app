@@ -1,22 +1,32 @@
-<aside class="sidebar">
-  <h2>Spaces</h2>
-  <ul class="space-list">
-    <li
-      *ngFor="let space of spaces"
-      (click)="onSpaceClick(space)"
-      [class.active]="space === selectedSpace"
-    >
-      <div class="space-name">{{ space.name }}</div>
+<aside class="sidebar h-dvh">
+  <ul class="space-list font-semibold">
+      <div class="space-name">{{ selectedBoard.name }}</div>
 
-      <ul class="list-list">
+      <ul class="list-list flex flex-row gap-2 m-3">
         <li
-          *ngFor="let list of space.lists"
-          (click)="onListClick(list, $event)"
-          [class.active]="list === selectedList"
+          *ngFor="let taskList of selectedBoard.taskLists"
+          (click)="onListClick(taskList, $event)"
+          class="w-72 py-2 rounded-2xl bg-[#101204] px-2"
         >
-          {{ list.name }}
+          <span class="mx-4">{{ taskList.name }}</span>
+
+          <ul class="task-list flex flex-col gap-2 mt-2 text-neutral-400">
+            <li
+              *ngFor="let task of taskList.tasks"
+              (click)="onTaskClick(task, $event)"
+              [class.active]="task === selectedTask"
+              class="py-2 px-4 rounded-lg bg-[#242528]"
+            >
+              {{ task.title }}
+            </li>
+            <li 
+              class="py-2 px-4 rounded-lg hover:bg-[#343538]   cursor-pointer "
+            >
+              + Add a new task
+            </li>
+          </ul>
+          
         </li>
       </ul>
-    </li>
   </ul>
 </aside>

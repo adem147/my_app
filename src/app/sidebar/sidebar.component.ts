@@ -9,19 +9,26 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  @Input() spaces: any[] = [];
-  @Input() selectedSpace!: any;
+  @Input() boards: any[] = [];
+  @Input() selectedBoard!: any;
   @Input() selectedList!: any;
+  @Input() selectedTask!: any;
 
-  @Output() spaceSelected = new EventEmitter<any>();
+  @Output() boardSelected = new EventEmitter<any>();
   @Output() listSelected = new EventEmitter<any>();
+  @Output() taskSelected = new EventEmitter<any>();
 
-  onSpaceClick(space: any): void {
-    this.spaceSelected.emit(space);
+  onBoardClick(board: any): void {
+    this.boardSelected.emit(board);
   }
 
   onListClick(list: any, event: MouseEvent): void {
     event.stopPropagation();
     this.listSelected.emit(list);
+  }
+
+  onTaskClick(task: any, event: MouseEvent): void {
+    event.stopPropagation();
+    this.taskSelected.emit(task);
   }
 }
