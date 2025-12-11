@@ -10,15 +10,131 @@
     <button type="button" (click)="onAddTask()">Add</button>
   </div>
 
-  <ul>
-    <li *ngFor="let task of tasks">
-      <input
-        type="checkbox"
-        [checked]="task.done"
-        (change)="onToggle(task)"
-      />
-      <span [class.done]="task.done">{{ task.title }}</span>
-      <button type="button" class="delete" (click)="onDeleteTask(task)">✕</button>
-    </li>
-  </ul>
+  <div class="task-columns">
+    <div class="task-column">
+      <div class="task-column-header">
+        <button type="button" (click)="toggleSection('todo')">
+          {{ showTodoSection ? '▾' : '▸' }}
+        </button>
+        <h3>To do <span class="task-count">{{ todoTasks.length }}</span></h3>
+      </div>
+      <ul *ngIf="showTodoSection">
+        <li *ngFor="let task of todoTasks">
+          <div class="task-main">
+            <span class="status-icon" [ngClass]="task.status" aria-hidden="true">{{ getStatusIcon(task.status) }}</span>
+            <span [class.done]="task.done">{{ task.title }}</span>
+            <button type="button" class="delete" (click)="onDeleteTask(task)">✕</button>
+          </div>
+
+          <div class="task-meta">
+            <label>
+              <span>Date</span>
+              <input type="date" [(ngModel)]="task.date" />
+            </label>
+            <label>
+              <span>Status</span>
+              <select [(ngModel)]="task.status">
+                <option [ngValue]="'todo'">To do</option>
+                <option [ngValue]="'in_progress'">In progress</option>
+                <option [ngValue]="'completed'">Completed</option>
+              </select>
+            </label>
+
+            <label class="task-comment">
+              <span>Comment</span>
+              <input
+                type="text"
+                [(ngModel)]="task.comment"
+                placeholder="Add a comment"
+              />
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="task-column">
+      <div class="task-column-header">
+        <button type="button" (click)="toggleSection('in_progress')">
+          {{ showInProgressSection ? '▾' : '▸' }}
+        </button>
+        <h3>In progress <span class="task-count">{{ inProgressTasks.length }}</span></h3>
+      </div>
+      <ul *ngIf="showInProgressSection">
+        <li *ngFor="let task of inProgressTasks">
+          <div class="task-main">
+            <span class="status-icon" [ngClass]="task.status" aria-hidden="true">{{ getStatusIcon(task.status) }}</span>
+            <span [class.done]="task.done">{{ task.title }}</span>
+            <button type="button" class="delete" (click)="onDeleteTask(task)">✕</button>
+          </div>
+
+          <div class="task-meta">
+            <label>
+              <span>Date</span>
+              <input type="date" [(ngModel)]="task.date" />
+            </label>
+            <label>
+              <span>Status</span>
+              <select [(ngModel)]="task.status">
+                <option [ngValue]="'todo'">To do</option>
+                <option [ngValue]="'in_progress'">In progress</option>
+                <option [ngValue]="'completed'">Completed</option>
+              </select>
+            </label>
+
+            <label class="task-comment">
+              <span>Comment</span>
+              <input
+                type="text"
+                [(ngModel)]="task.comment"
+                placeholder="Add a comment"
+              />
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="task-column">
+      <div class="task-column-header">
+        <button type="button" (click)="toggleSection('completed')">
+          {{ showCompletedSection ? '▾' : '▸' }}
+        </button>
+        <h3>Completed <span class="task-count">{{ completedTasks.length }}</span></h3>
+      </div>
+      <ul *ngIf="showCompletedSection">
+        <li *ngFor="let task of completedTasks">
+          <div class="task-main">
+            <span class="status-icon" [ngClass]="task.status" aria-hidden="true">{{ getStatusIcon(task.status) }}</span>
+            <span [class.done]="task.done">{{ task.title }}</span>
+            <button type="button" class="delete" (click)="onDeleteTask(task)">✕</button>
+          </div>
+
+          <div class="task-meta">
+            <label>
+              <span>Date</span>
+              <input type="date" [(ngModel)]="task.date" />
+            </label>
+            <label>
+              <span>Status</span>
+              <select [(ngModel)]="task.status">
+                <option [ngValue]="'todo'">To do</option>
+                <option [ngValue]="'in_progress'">In progress</option>
+                <option [ngValue]="'completed'">Completed</option>
+              </select>
+            </label>
+
+            <label class="task-comment">
+              <span>Comment</span>
+              <input
+                type="text"
+                [(ngModel)]="task.comment"
+                placeholder="Add a comment"
+              />
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </section>

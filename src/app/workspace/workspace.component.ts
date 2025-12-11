@@ -7,6 +7,9 @@ interface Task {
   id: number;
   title: string;
   done: boolean;
+  date: string;
+  status: 'todo' | 'in_progress' | 'completed';
+  comment: string;
 }
 
 interface TaskList {
@@ -38,8 +41,22 @@ export class WorkspaceComponent {
           id: 1,
           name: 'To Do',
           tasks: [
-            { id: 1, title: 'Buy groceries', done: false },
-            { id: 2, title: 'Study Angular', done: true }
+            {
+              id: 1,
+              title: 'Buy groceries',
+              done: false,
+              date: '2025-01-01',
+              status: 'todo',
+              comment: ''
+            },
+            {
+              id: 2,
+              title: 'Study Angular',
+              done: true,
+              date: '2025-01-02',
+              status: 'completed',
+              comment: ''
+            }
           ]
         },
         {
@@ -57,7 +74,14 @@ export class WorkspaceComponent {
           id: 3,
           name: 'Tasks',
           tasks: [
-            { id: 3, title: 'Prepare report', done: false }
+            {
+              id: 3,
+              title: 'Prepare report',
+              done: false,
+              date: '2025-01-03',
+              status: 'in_progress',
+              comment: ''
+            }
           ]
         }
       ]
@@ -84,7 +108,14 @@ export class WorkspaceComponent {
     const newId = this.selectedList.tasks.length
       ? Math.max(...this.selectedList.tasks.map(t => t.id)) + 1
       : 1;
-    this.selectedList.tasks.push({ id: newId, title, done: false });
+    this.selectedList.tasks.push({
+      id: newId,
+      title,
+      done: false,
+      date: new Date().toISOString().slice(0, 10),
+      status: 'todo',
+      comment: ''
+    });
   }
 
   onTaskDeleted(task: Task): void {

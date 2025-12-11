@@ -6,6 +6,9 @@ interface Task {
   id: number;
   title: string;
   done: boolean;
+  date: string;
+  status: 'todo' | 'in_progress' | 'completed';
+  comment: string;
 }
 
 @Component({
@@ -24,6 +27,10 @@ export class TaskListComponent {
 
   newTaskTitle = '';
 
+  showTodoSection = true;
+  showInProgressSection = true;
+  showCompletedSection = true;
+
   onToggle(task: Task): void {
     this.taskToggled.emit(task);
   }
@@ -39,5 +46,44 @@ export class TaskListComponent {
 
   onDeleteTask(task: Task): void {
     this.taskDeleted.emit(task);
+  }
+
+  toggleSection(section: Task['status']): void {
+    switch (section) {
+      case 'todo':
+        this.showTodoSection = !this.showTodoSection;
+        break;
+      case 'in_progress':
+        this.showInProgressSection = !this.showInProgressSection;
+        break;
+      case 'completed':
+        this.showCompletedSection = !this.showCompletedSection;
+        break;
+    }
+  }
+
+  getStatusIcon(status: Task['status']): string {
+    switch (status) {
+      case 'todo':
+        return '🔵';
+      case 'in_progress':
+        return '🟡';
+      case 'completed':
+        return '✅';
+      default:
+        return '🔘';
+    }
+  }
+
+  get todoTasks(): Task[] {
+    return this.tasks.filter((task) => task.status === 'todo');
+  }
+
+  get inProgressTasks(): Task[] {
+    return this.tasks.filter((task) => task.status === 'in_progress');
+  }
+
+  get completedTasks(): Task[] {
+    return this.tasks.filter((task) => task.status === 'completed');
   }
 }
