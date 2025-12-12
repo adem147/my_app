@@ -13,15 +13,17 @@
   <div class="task-columns">
     <div class="task-column">
       <div class="task-column-header">
-        <button type="button" (click)="toggleSection('todo')">
-          {{ showTodoSection ? '▾' : '▸' }}
+        <button type="button" (click)="toggleSection('completed')">
+          {{ showCompletedSection ? '▾' : '▸' }}
         </button>
-        <h3>To do <span class="task-count">{{ todoTasks.length }}</span></h3>
+        <h3>Completed <span class="task-count">{{ completedTasks.length }}</span></h3>
       </div>
-      <ul *ngIf="showTodoSection">
-        <li *ngFor="let task of todoTasks">
+      <ul *ngIf="showCompletedSection">
+        <li *ngFor="let task of completedTasks">
           <div class="task-main">
-            <span class="status-icon" [ngClass]="task.status" aria-hidden="true">{{ getStatusIcon(task.status) }}</span>
+            <span class="status-icon completed" aria-hidden="true">
+              <img src="assets/completed.svg" alt="Completed task icon" />
+            </span>
             <span [class.done]="task.done">{{ task.title }}</span>
             <button type="button" class="delete" (click)="onDeleteTask(task)">✕</button>
           </div>
@@ -63,7 +65,9 @@
       <ul *ngIf="showInProgressSection">
         <li *ngFor="let task of inProgressTasks">
           <div class="task-main">
-            <span class="status-icon" [ngClass]="task.status" aria-hidden="true">{{ getStatusIcon(task.status) }}</span>
+            <span class="status-icon in_progress" aria-hidden="true">
+              <img src="assets/in_progress.svg" alt="Task in progress icon" />
+            </span>
             <span [class.done]="task.done">{{ task.title }}</span>
             <button type="button" class="delete" (click)="onDeleteTask(task)">✕</button>
           </div>
@@ -97,15 +101,17 @@
 
     <div class="task-column">
       <div class="task-column-header">
-        <button type="button" (click)="toggleSection('completed')">
-          {{ showCompletedSection ? '▾' : '▸' }}
+        <button type="button" (click)="toggleSection('todo')">
+          {{ showTodoSection ? '▾' : '▸' }}
         </button>
-        <h3>Completed <span class="task-count">{{ completedTasks.length }}</span></h3>
+        <h3>To do <span class="task-count">{{ todoTasks.length }}</span></h3>
       </div>
-      <ul *ngIf="showCompletedSection">
-        <li *ngFor="let task of completedTasks">
+      <ul *ngIf="showTodoSection">
+        <li *ngFor="let task of todoTasks">
           <div class="task-main">
-            <span class="status-icon" [ngClass]="task.status" aria-hidden="true">{{ getStatusIcon(task.status) }}</span>
+            <span class="status-icon todo" aria-hidden="true">
+              <img src="assets/to_do.svg" alt="To do task icon" />
+            </span>
             <span [class.done]="task.done">{{ task.title }}</span>
             <button type="button" class="delete" (click)="onDeleteTask(task)">✕</button>
           </div>
