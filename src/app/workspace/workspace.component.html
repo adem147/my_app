@@ -1,9 +1,53 @@
 <div class="workspace">
-  <app-sidebar
-    [boards]="boards"
-    [selectedBoard]="selectedBoard"
-    [selectedList]="selectedList"
-    (boardSelected)="onBoardSelected($event)"
-    (listSelected)="onListSelected($event)"
-  ></app-sidebar>
+  <aside class="sidebar h-dvh">
+    <div class="space-list font-semibold">
+      <div class="space-name px-4 flex flex-row gap-2">
+        <div class="flex flex-row items-center gap-2">
+          <div class="relative flex-1">
+            <!-- Show select by default, input when editing -->
+            <select 
+              #boardSelect 
+              *ngIf="!isEditingBoardTitle"
+              (change)="onBoardChange(+boardSelect.value)"
+              (dblclick)="startEditingBoardTitle()"
+              class="w-full pl-4 py-2 pr-10 rounded-xl text-white text-[17px] focus:outline-none focus:border-transparent appearance-none cursor-pointer transition-all hover:bg-[#1e293b]"
+            >
+              <option *ngFor="let board of boards" [value]="board.id">{{ board.name }}</option>
+            </select>
+            
+            <!-- Show input when editing -->
+            <input 
+              *ngIf="isEditingBoardTitle"
+              #boardTitleInput
+              type="text"
+              [value]="selectedBoard?.name"
+              (blur)="saveBoardTitle()"
+              (keyup.enter)="saveBoardTitle()"
+              (keyup.escape)="cancelEditingBoardTitle()"
+              class="w-40 pl-4 py-2 pr-8 rounded-xl text-white text-[17px] bg-[#1e293b] focus:outline-none focus:ring-2 focus:ring-blue-500"
+              autofocus
+            />
+            
+            <!-- Custom dropdown icon (only show when not editing) -->
+            <div 
+              *ngIf="!isEditingBoardTitle"
+              class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
+            >
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <span class="text-sm text-gray-500">{{ selectedBoard?.taskLists?.length || 0 }} lists • {{ getTotalTasks() }} tasks</span>
+      </div>
+      <app-taskboard
+        [boards]="boards"
+        [selectedBoard]="selectedBoard"
+        (taskAdded)="onTaskAdded($event)"
+        (taskUpdated)="onTaskUpdated($event)"
+        (taskDeleted)="onTaskDeleted($event)"
+      ></app-taskboard>
+    </div>
+  </aside>
 </div>
